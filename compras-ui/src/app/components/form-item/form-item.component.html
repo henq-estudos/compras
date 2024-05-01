@@ -1,0 +1,7 @@
+<form class="add-item" (ngSubmit)="editando ? editarItem() : adicionarItem()" [formGroup]="formItem" #formDir="ngForm">
+  <input type="text" placeholder="Digite o item que deseja adicionar" formControlName="nome" required />
+  <div *ngIf="nome.invalid && formDir.submitted" class="validation-error">
+    <p *ngIf="nome.errors?.['required']">O campo é obrigatório!</p>
+  </div>
+  <button type="submit">{{ textoBtn }}</button>
+</form>

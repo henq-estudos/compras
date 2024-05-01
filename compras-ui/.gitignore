@@ -1,0 +1,9 @@
+# Arquivos de compilação e cache
+/dist/
+/node_modules/
+/.angular/
+/.vscode/
+
+# Arquivos de configuração
+.env
+.env.prod
