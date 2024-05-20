@@ -7,6 +7,7 @@ import com.henrick.programer.comprasapi.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -20,5 +21,9 @@ public class ItemService {
         repository.save(item);
         return new ItemDetalheDTO(item.getId(), item.getNome(), item.getData(), item.getComprado());
 
+    }
+
+    public List<ItemDetalheDTO> listarItens() {
+        return repository.findAll().stream().map(ItemDetalheDTO::new).toList();
     }
 }

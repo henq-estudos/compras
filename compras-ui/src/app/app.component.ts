@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   constructor(private listaService: ListaDeCompraService) { }
 
   ngOnInit(): void {
-    // this.listaDeCompra = this.listaService.getListaDeCompra();
+    this.atualizarLista();
   }
 
   editarItem(item: Item) {
@@ -31,7 +31,18 @@ export class AppComponent implements OnInit {
     this.listaDeCompra = [];
   }
 
-  // ngDoCheck(): void {
-  //   this.listaService.atualizarLocalStorage();
-  // }
+  creatHandler(item: Item) {
+    this.listaService.cadastrar(item).subscribe(() => {
+      this.atualizarLista();
+    });
+  }
+
+  atualizarLista() {
+    this.listaService.listar().subscribe(dados => {
+      this.listaDeCompra = dados.map(item => {
+        item.data = new Date(item.data).toLocaleString('pt-BR');
+        return item;
+      });
+    });
+  }
 }
