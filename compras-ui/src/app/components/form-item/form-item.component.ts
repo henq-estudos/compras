@@ -1,5 +1,6 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges, } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { formatData } from 'src/app/core/utils/format-data-utils';
 import { Item } from 'src/app/interfaces/iItem';
 import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
@@ -11,13 +12,14 @@ import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
 })
 export class FormItemComponent implements OnInit, OnChanges {
   @Input() itemQueVaiSerEditado!: Item;
+  @Output() onSubmit: EventEmitter<Item> = new EventEmitter<Item>();
   editando = false;
   textoBtn = 'Salvar item';
 
   formItem!: FormGroup;
 
   valorItem!: string;
-  constructor(private listaService: ListaDeCompraService, private formBuilder: FormBuilder, private cd: ChangeDetectorRef) { }
+  constructor(private listaService: ListaDeCompraService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
     this.formItem = this.formBuilder.group({
@@ -39,10 +41,8 @@ export class FormItemComponent implements OnInit, OnChanges {
       data: formatData(new Date),
       comprado: false
     }
-    this.listaService.cadastrar(dados).subscribe(() => {
-      this.formItem.reset();
-      this.cd.detectChanges(); // Força a detecção de mudanças
-    });
+    this.onSubmit.emit(dados);
+    this.formItem.reset();
   }
 
   limparCampo() {
@@ -53,10 +53,6 @@ export class FormItemComponent implements OnInit, OnChanges {
     this.editando = false;
     this.textoBtn = 'Salvar item';
   }
-
-  // atualizarItemMarcado() {
-  //   this.listaService.atualizarItemMarcado(this.itemMarcado);
-  // }
 
   ngOnChanges(changes: SimpleChanges) {
     if (!changes['itemQueVaiSerEditado'].firstChange) {

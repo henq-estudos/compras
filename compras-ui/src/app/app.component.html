@@ -1,5 +1,5 @@
 <section class="main">
-  <form-item [itemQueVaiSerEditado]="itemParaSerEditado"> </form-item>
+  <form-item [itemQueVaiSerEditado]="itemParaSerEditado" (onSubmit)="creatHandler($event)"> </form-item>
   <div class="container">
     <div class="lista">
       <div class="header-lista">
@@ -10,11 +10,8 @@
       </div>
       <div *ngIf="listaDeCompra.length !== 0; else naoTemItem">
         <div *ngFor="let item of listaDeCompra">
-          <app-item
-            [item]="item"
-            (emitindoItemParaEditar)="editarItem($event)"
-            (emitindoItemParaDeletar)="deletarItem($event)"
-          ></app-item>
+          <app-item [item]="item" (emitindoItemParaEditar)="editarItem($event)"
+            (emitindoItemParaDeletar)="deletarItem($event)"></app-item>
         </div>
       </div>
       <ng-template #naoTemItem>
