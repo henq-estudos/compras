@@ -45,10 +45,6 @@ export class FormItemComponent implements OnInit, OnChanges {
     this.formItem.reset();
   }
 
-  limparCampo() {
-    this.valorItem = '';
-  }
-
   editarItem() {
     this.editando = false;
     this.textoBtn = 'Salvar item';

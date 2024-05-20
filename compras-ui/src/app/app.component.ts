@@ -8,6 +8,7 @@ import { ListaDeCompraService } from './service/lista-de-compra.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
+
   title = 'app-lista-de-compras';
   listaDeCompra: Item[] = [];
   itemParaSerEditado!: Item;
@@ -22,9 +23,10 @@ export class AppComponent implements OnInit {
     this.itemParaSerEditado = item;
   }
 
-  deletarItem(id: number) {
-    const index = this.listaDeCompra.findIndex((item) => item.id === id);
-    this.listaDeCompra.splice(index, 1);
+  deleteHandler(id: number) {
+    this.listaService.deletar(id).subscribe(() => {
+      this.atualizarLista();
+    });
   }
 
   limparLista() {

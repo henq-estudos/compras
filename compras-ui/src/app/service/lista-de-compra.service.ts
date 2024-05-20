@@ -19,4 +19,9 @@ export class ListaDeCompraService {
     return this.http.get<Item[]>(this.PATH);
   }
 
+  deletar(id: number) {
+    const url = `${this.PATH}/${id}`;
+    return this.http.delete(url);
+  }
+
 }
