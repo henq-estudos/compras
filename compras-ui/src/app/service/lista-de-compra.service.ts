@@ -30,7 +30,7 @@ export class ListaDeCompraService {
     return this.http.delete<void>(this.PATH);
   }
 
-  editar(item: Item): Observable<Item> {
+  atualizar(item: Item): Observable<Item> {
     return this.http.put<Item>(this.PATH, item);
   }
 
