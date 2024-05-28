@@ -30,7 +30,9 @@ export class AppComponent implements OnInit {
   }
 
   limparLista() {
-    this.listaDeCompra = [];
+    this.listaService.deletarTodos().subscribe(() => {
+      this.atualizarLista();
+    });
   }
 
   creatHandler(item: Item) {

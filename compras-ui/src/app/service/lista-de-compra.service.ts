@@ -7,6 +7,7 @@ import { Item } from 'src/app/interfaces/iItem';
   providedIn: 'root',
 })
 export class ListaDeCompraService {
+
   private readonly PATH = 'http://localhost:8080/itens';
 
   constructor(private http: HttpClient) { }
@@ -19,9 +20,13 @@ export class ListaDeCompraService {
     return this.http.get<Item[]>(this.PATH);
   }
 
-  deletar(id: number) {
+  deletar(id: number): Observable<void> {
     const url = `${this.PATH}/${id}`;
-    return this.http.delete(url);
+    return this.http.delete<void>(url);
+  }
+
+  deletarTodos(): Observable<void> {
+    return this.http.delete<void>(this.PATH);
   }
 
 }

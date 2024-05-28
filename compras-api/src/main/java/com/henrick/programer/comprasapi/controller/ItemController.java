@@ -44,4 +44,10 @@ public class ItemController {
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
         return itemService.deletarItem(id);
     }
+
+    @DeleteMapping
+    @Transactional
+    public ResponseEntity<Void> deletarTodos() {
+        return itemService.deletarTodosOsItens();
+    }
 }
