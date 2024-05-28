@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { formatData } from 'src/app/core/utils/format-data-utils';
+import { formataData } from 'src/app/core/utils/format-data-utils';
 import { Item } from 'src/app/interfaces/iItem';
 import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
 
@@ -36,7 +36,7 @@ export class FormItemComponent implements OnInit, OnChanges {
     const dados: Item = {
       id: 0,
       nome: this.formItem.value.nome,
-      data: formatData(new Date),
+      data: formataData(new Date),
       comprado: false
     }
     this.onSubmit.emit(dados);
@@ -47,7 +47,7 @@ export class FormItemComponent implements OnInit, OnChanges {
     const dados: Item = {
       id: this.itemQueVaiSerEditado.id,
       nome: this.formItem.value.nome,
-      data: formatData(new Date),
+      data: formataData(new Date),
       comprado: this.itemQueVaiSerEditado.comprado
     }
     this.onEdit.emit(dados);

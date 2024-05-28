@@ -1,4 +1,4 @@
-export function formatData(data: Date) {
+export function formataData(data: Date) {
   const dataAtual = data;
 
   const ano = dataAtual.getFullYear();

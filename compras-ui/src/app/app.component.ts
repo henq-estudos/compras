@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   editHandler(item: Item) {
-    this.listaService.editar(item).subscribe(() => {
+    this.listaService.atualizar(item).subscribe(() => {
       this.atualizarLista();
     });
   }
@@ -45,10 +45,7 @@ export class AppComponent implements OnInit {
 
   atualizarLista() {
     this.listaService.listar().subscribe(dados => {
-      this.listaDeCompra = dados.map(item => {
-        item.data = new Date(item.data).toLocaleString('pt-BR');
-        return item;
-      });
+      this.listaDeCompra = dados;
     });
   }
 }
