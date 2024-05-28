@@ -19,8 +19,10 @@ export class AppComponent implements OnInit {
     this.atualizarLista();
   }
 
-  editarItem(item: Item) {
-    this.itemParaSerEditado = item;
+  editHandler(item: Item) {
+    this.listaService.editar(item).subscribe(() => {
+      this.atualizarLista();
+    });
   }
 
   deleteHandler(id: number) {

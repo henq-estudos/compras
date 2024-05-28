@@ -8,6 +8,7 @@ import { Item } from 'src/app/interfaces/iItem';
 })
 export class ListaDeCompraService {
 
+
   private readonly PATH = 'http://localhost:8080/itens';
 
   constructor(private http: HttpClient) { }
@@ -27,6 +28,10 @@ export class ListaDeCompraService {
 
   deletarTodos(): Observable<void> {
     return this.http.delete<void>(this.PATH);
+  }
+
+  editar(item: Item): Observable<Item> {
+    return this.http.put<Item>(this.PATH, item);
   }
 
 }

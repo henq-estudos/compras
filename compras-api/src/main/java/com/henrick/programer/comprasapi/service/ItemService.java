@@ -1,7 +1,7 @@
 package com.henrick.programer.comprasapi.service;
 
 import com.henrick.programer.comprasapi.modelo.dto.ItemCadastroDTO;
-import com.henrick.programer.comprasapi.modelo.dto.ItemDetalheDTO;
+import com.henrick.programer.comprasapi.modelo.dto.ItemDTO;
 import com.henrick.programer.comprasapi.modelo.entidade.Item;
 import com.henrick.programer.comprasapi.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,16 +19,16 @@ public class ItemService {
 
     private final ItemRepository repository;
 
-    public ItemDetalheDTO cadastrarItem(ItemCadastroDTO dados) {
+    public ItemDTO cadastrarItem(ItemCadastroDTO dados) {
         var item = new Item();
         BeanUtils.copyProperties(dados, item);
         repository.save(item);
-        return new ItemDetalheDTO(item.getId(), item.getNome(), item.getData(), item.getComprado());
+        return new ItemDTO(item);
 
     }
 
-    public List<ItemDetalheDTO> listarItens() {
-        return repository.findAll().stream().map(ItemDetalheDTO::new).toList();
+    public List<ItemDTO> listarItens() {
+        return repository.findAll().stream().map(ItemDTO::new).toList();
     }
 
     public ResponseEntity<Void> deletarItem(Long id) {
@@ -43,5 +43,16 @@ public class ItemService {
     public ResponseEntity<Void> deletarTodosOsItens() {
         repository.deleteAll();
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    public ResponseEntity<ItemDTO> editarItem(ItemDTO dados) {
+        Optional<Item> item0 = repository.findById(dados.id());
+        if (item0.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+        Item itemModel = item0.get();
+        BeanUtils.copyProperties(dados, itemModel);
+        repository.save(itemModel);
+        return ResponseEntity.status(HttpStatus.OK).body(new ItemDTO(itemModel));
     }
 }

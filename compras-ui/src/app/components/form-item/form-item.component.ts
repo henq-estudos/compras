@@ -13,18 +13,16 @@ import { ListaDeCompraService } from 'src/app/service/lista-de-compra.service';
 export class FormItemComponent implements OnInit, OnChanges {
   @Input() itemQueVaiSerEditado!: Item;
   @Output() onSubmit: EventEmitter<Item> = new EventEmitter<Item>();
+  @Output() onEdit: EventEmitter<Item> = new EventEmitter<Item>();
   editando = false;
   textoBtn = 'Salvar item';
 
   formItem!: FormGroup;
 
-  valorItem!: string;
   constructor(private listaService: ListaDeCompraService, private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
-    this.formItem = this.formBuilder.group({
-      nome: ["", Validators.required],
-    })
+    this.inicializarForm();
   }
 
   get nome() {
@@ -46,7 +44,14 @@ export class FormItemComponent implements OnInit, OnChanges {
   }
 
   editarItem() {
-    this.editando = false;
+    const dados: Item = {
+      id: this.itemQueVaiSerEditado.id,
+      nome: this.formItem.value.nome,
+      data: formatData(new Date),
+      comprado: this.itemQueVaiSerEditado.comprado
+    }
+    this.onEdit.emit(dados);
+    this.formItem.reset();
     this.textoBtn = 'Salvar item';
   }
 
@@ -54,7 +59,15 @@ export class FormItemComponent implements OnInit, OnChanges {
     if (!changes['itemQueVaiSerEditado'].firstChange) {
       this.editando = true;
       this.textoBtn = 'Editar item';
-      this.valorItem = this.itemQueVaiSerEditado?.nome;
+      this.inicializarForm();
     }
   }
+
+  inicializarForm() {
+    this.formItem = this.formBuilder.group({
+      nome: [this.itemQueVaiSerEditado ? this.itemQueVaiSerEditado.nome : '', Validators.required]
+    })
+  }
+
+
 }

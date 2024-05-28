@@ -2,9 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
-  OnChanges,
-  OnInit,
-  Output,
+  Output
 } from '@angular/core';
 import { faPen, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { Item } from 'src/app/interfaces/iItem';
@@ -16,7 +14,7 @@ import { Item } from 'src/app/interfaces/iItem';
 })
 export class ItemComponent {
   @Input() item!: Item;
-  @Output() emitindoItemParaEditar = new EventEmitter();
+  @Output() onItemEdit = new EventEmitter();
   @Output() onDelete = new EventEmitter();
 
   faPen = faPen;
@@ -25,7 +23,7 @@ export class ItemComponent {
   constructor() { }
 
   editarItem() {
-    this.emitindoItemParaEditar.emit(this.item);
+    this.onItemEdit.emit(this.item);
   }
 
   deletarItem(id: number) {
