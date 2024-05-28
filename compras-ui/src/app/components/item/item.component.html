@@ -1,7 +1,7 @@
 <input class="checkbox" type="checkbox" name="comprado" id="comprado" [ngModel]="item.comprado"
   (ngModelChange)="onCheckboxChange($event)" />
 <p [ngClass]="alterarEstiloItemMarcado(item)" class="description">
-  {{ item.nome }}
+  {{ item.nome | capitalize }}
 </p>
 <div class="d-contents" *ngIf="!item.comprado">
   <fa-icon class="delete-icon" (click)="deletarItem(item.id!)" [icon]="faTrash"></fa-icon>

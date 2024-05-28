@@ -51,6 +51,7 @@ export class FormItemComponent implements OnInit, OnChanges {
       comprado: this.itemQueVaiSerEditado.comprado
     }
     this.onEdit.emit(dados);
+    this.editando = false;
     this.formItem.reset();
     this.textoBtn = 'Salvar item';
   }
